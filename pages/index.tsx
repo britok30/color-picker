@@ -106,7 +106,7 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const randomColor = random().toRgb();
   return {
     props: {
