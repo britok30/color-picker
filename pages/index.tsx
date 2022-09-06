@@ -113,7 +113,7 @@ const Home: NextPage = () => {
             <Detail title="Brightness" value={brightness} />
             <Detail title="Luminance" value={luminance} />
             <Detail title="Contrast on white" value={`${contrast}:1`} />
-            <Detail title="Hue" value={hue} />
+            <Detail title="Hue" value={`${hue} deg`} />
             {name && <Detail title="CSS Keyword" value={`~${name}`} />}
           </div>
           {/* <div className="mt-5">
