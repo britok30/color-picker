@@ -1,86 +1,135 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useState, useEffect } from "react";
+import { RgbColorPicker, RgbColor } from "react-colorful";
+import { Footer } from "../components/Footer";
+import { colord, extend, random } from "colord";
+import hwbPlugin from "colord/plugins/hwb";
+import cmykPlugin from "colord/plugins/cmyk";
+import a11yPlugin from "colord/plugins/a11y";
+import lchPlugin from "colord/plugins/lch";
+import labPlugin from "colord/plugins/lab";
+import namesPlugin from "colord/plugins/names";
+import harmonies, { HarmonyType } from "colord/plugins/harmonies";
+import { Detail } from "../components/Details";
+import { Harmonies } from "../components/Harmonies";
 
 const Home: NextPage = () => {
+  extend([
+    hwbPlugin,
+    cmykPlugin,
+    a11yPlugin,
+    lchPlugin,
+    labPlugin,
+    namesPlugin,
+    harmonies,
+  ]);
+
+  const [color, setColor] = useState<RgbColor>({ r: 0, g: 0, b: 0 });
+  const hex = colord(color).toHex();
+  const textColor = colord(hex).brightness() >= 0.5 ? "#000" : "#fff";
+  const hsl = colord(hex).toHslString();
+  const hwb = colord(hex).toHwbString();
+  const cmyk = colord(hex).toCmykString();
+  const name = colord(hex).toName({ closest: true });
+  const brightness = colord(hex).brightness() * 100;
+  const luminance = colord(hex).luminance();
+  const contrast = colord(hex).contrast();
+  const hue = colord(hex).hue();
+  const lch = colord(hex).toLchString();
+  const lab = colord(hex).toLab();
+
+  const getHarmonyList = (key: HarmonyType) => {
+    return colord(hex)
+      .harmonies(key)
+      .map((c) => c.toHex());
+  };
+
+  const complementary = getHarmonyList("complementary");
+  const analogous = getHarmonyList("analogous");
+  const dsComplemenary = getHarmonyList("double-split-complementary");
+  const rectangle = getHarmonyList("rectangle");
+  const splitComplementary = getHarmonyList("split-complementary");
+  const tetradic = getHarmonyList("tetradic");
+  const triadic = getHarmonyList("triadic");
+
+  const handleChange = (color: RgbColor) => {
+    setColor(color);
+  };
+
+  useEffect(() => {
+    // Generate randoem color
+    setColor(random().toRgb());
+  }, []);
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div
+      className="flex min-h-screen flex-col items-center justify-center py-4"
+      style={{
+        color: textColor,
+        backgroundColor: hex,
+      }}
+    >
       <Head>
-        <title>Create Next App</title>
+        <title>Color Picker | HTML Color Codes | RGB Color Picker</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta content="Kelvin Brito" name="author" />
+        <meta property="og:type" content="website" />
+        <meta name="theme-color" content={hex} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content={`Color Picker: Get useful color conversions about color ${hex}.`}
+        />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+      <main className="flex flex-col space-y-5 items-center justify-center">
+        <RgbColorPicker color={color} onChange={handleChange} />
+        <div>
+          <h1 className="text-6xl mb-4">Color Picker 🎨 </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1">
+            <Detail
+              title="RGB"
+              value={`rgb(${color.r} ${color.g} ${color.b})`}
+            />
+            <Detail title="HEX" value={hex} />
+            <Detail title="HSL" value={hsl} />
+            <Detail title="HWB" value={hwb} />
+            <Detail title="CMYK" value={cmyk} />
+            <Detail title="Lch" value={lch} />
+            <Detail
+              title="Lab"
+              value={`lab(${lab.l.toFixed(0)}, ${lab.a.toFixed(
+                0
+              )}, ${lab.b.toFixed(0)}, ${lab.alpha})`}
+            />
+            <Detail title="Brightness" value={brightness} />
+            <Detail title="Luminance" value={luminance} />
+            <Detail title="Contrast on white" value={`${contrast}:1`} />
+            <Detail title="Hue" value={hue} />
+            {name && <Detail title="CSS Keyword" value={`~${name}`} />}
+          </div>
+          {/* <div className="mt-5">
+            <h2 className="text-3xl mb-4">Color Harmonies</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1">
+              <Harmonies list={complementary} title="Complementary" />
+              <Harmonies list={analogous} title="Analogous" />
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+              <Harmonies list={rectangle} title="Rectangle" />
+              <Harmonies
+                list={splitComplementary}
+                title="Split Complementary"
+              />
+              <Harmonies list={tetradic} title="Tetradic" />
+              <Harmonies list={triadic} title="Triadic" />
+            </div>
+          </div> */}
         </div>
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
