@@ -1,7 +1,7 @@
-import Head from "next/head";
 import { useState, useEffect } from "react";
 import { RgbColorPicker, RgbColor } from "react-colorful";
 import { Footer } from "../components/Footer";
+import { SEO } from "../components/SEO";
 import { colord, extend, random } from "colord";
 import hwbPlugin from "colord/plugins/hwb";
 import cmykPlugin from "colord/plugins/cmyk";
@@ -55,31 +55,7 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
         backgroundColor: hex,
       }}
     >
-      <Head>
-        <title>{pageTitle}</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta charSet="utf-8" />
-        <meta content="Kelvin Brito" name="author" />
-        <meta name="theme-color" content={hex} />
-        <meta
-          name="keywords"
-          content="color picker, hex color picker, rgb color picker, color conversions, hex, colour, color hue picker"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content={description} />
-
-        <meta property="og:title" content={pageTitle} key="ogtitle" />
-        <meta property="og:description" content={description} key="ogdesc" />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://www.colorhuepicker.com/"
-          key="ogurl"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={description} />
-      </Head>
+      <SEO pageTitle={pageTitle} description={description} hex={hex} />
 
       <main className="flex flex-col space-y-5 items-center justify-center">
         <RgbColorPicker color={color} onChange={handleChange} />
