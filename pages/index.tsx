@@ -53,6 +53,9 @@ const Home: NextPage = () => {
   const tetradic = getHarmonyList("tetradic");
   const triadic = getHarmonyList("triadic");
 
+  const pageTitle = `Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions`;
+  const description = `Color Picker: Get useful color conversions about color ${hex}.`;
+
   const handleChange = (color: RgbColor) => {
     setColor(color);
   };
@@ -71,19 +74,20 @@ const Home: NextPage = () => {
       }}
     >
       <Head>
-        <title>
-          Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions
-        </title>
+        <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta charSet="utf-8" />
         <meta content="Kelvin Brito" name="author" />
         <meta property="og:type" content="website" />
         <meta name="theme-color" content={hex} />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
-          name="description"
-          content={`Color Picker: Get useful color conversions about color ${hex}.`}
+          name="keywords"
+          content="color picker, hex color picker, rgb color picker, color conversions, hex, colour"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={description} />
+        <meta property="og:title" content={pageTitle} key="ogtitle" />
+        <meta property="og:description" content={description} key="ogdesc" />
       </Head>
 
       <main className="flex flex-col space-y-5 items-center justify-center">
