@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { RgbColorPicker, RgbColor } from "react-colorful";
@@ -10,11 +9,9 @@ import a11yPlugin from "colord/plugins/a11y";
 import lchPlugin from "colord/plugins/lch";
 import labPlugin from "colord/plugins/lab";
 import namesPlugin from "colord/plugins/names";
-import harmonies, { HarmonyType } from "colord/plugins/harmonies";
 import { Detail } from "../components/Details";
-import { Harmonies } from "../components/Harmonies";
 
-const Home: NextPage = () => {
+const Home = ({ randomColor }: { randomColor: RgbColor }) => {
   extend([
     hwbPlugin,
     cmykPlugin,
@@ -22,14 +19,9 @@ const Home: NextPage = () => {
     lchPlugin,
     labPlugin,
     namesPlugin,
-    harmonies,
   ]);
-  const [red, setRed] = useState<number>(0);
-  const [green, setGreen] = useState<number>(0);
-  const [blue, setBlue] = useState<number>(0);
 
-  const [color, setColor] = useState<RgbColor>(random().toRgb());
-  const randomColor = random().toRgb();
+  const [color, setColor] = useState<RgbColor>(randomColor);
   const hex = colord(color).toHex();
   const textColor = colord(hex).brightness() >= 0.5 ? "#000" : "#fff";
   const hsl = colord(hex).toHslString();
@@ -42,20 +34,6 @@ const Home: NextPage = () => {
   const hue = colord(hex).hue();
   const lch = colord(hex).toLchString();
   const lab = colord(hex).toLab();
-
-  // const getHarmonyList = (key: HarmonyType) => {
-  //   return colord(hex)
-  //     .harmonies(key)
-  //     .map((c) => c.toHex());
-  // };
-
-  // const complementary = getHarmonyList("complementary");
-  // const analogous = getHarmonyList("analogous");
-  // const dsComplemenary = getHarmonyList("double-split-complementary");
-  // const rectangle = getHarmonyList("rectangle");
-  // const splitComplementary = getHarmonyList("split-complementary");
-  // const tetradic = getHarmonyList("tetradic");
-  // const triadic = getHarmonyList("triadic");
 
   const pageTitle = `Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions`;
   const description = `Color Picker: Get useful color conversions about color ${hex}.`;
@@ -120,21 +98,6 @@ const Home: NextPage = () => {
             <Detail title="Hue" value={`${hue} deg`} />
             {name && <Detail title="CSS Keyword" value={`~${name}`} />}
           </div>
-          {/* <div className="mt-5">
-            <h2 className="text-3xl mb-4">Color Harmonies</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1">
-              <Harmonies list={complementary} title="Complementary" />
-              <Harmonies list={analogous} title="Analogous" />
-
-              <Harmonies list={rectangle} title="Rectangle" />
-              <Harmonies
-                list={splitComplementary}
-                title="Split Complementary"
-              />
-              <Harmonies list={tetradic} title="Tetradic" />
-              <Harmonies list={triadic} title="Triadic" />
-            </div>
-          </div> */}
         </div>
       </main>
 
@@ -142,5 +105,14 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+export async function getStaticProps() {
+  const randomColor = random().toRgb();
+  return {
+    props: {
+      randomColor,
+    },
+  };
+}
 
 export default Home;
