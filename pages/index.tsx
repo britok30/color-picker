@@ -71,8 +71,11 @@ const Home: NextPage = () => {
       }}
     >
       <Head>
-        <title>Color Picker | HTML Color Codes | RGB Color Picker</title>
+        <title>
+          Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions
+        </title>
         <link rel="icon" href="/favicon.ico" />
+        <meta charSet="utf-8" />
         <meta content="Kelvin Brito" name="author" />
         <meta property="og:type" content="website" />
         <meta name="theme-color" content={hex} />
@@ -96,9 +99,9 @@ const Home: NextPage = () => {
             <Detail title="HSL" value={hsl} />
             <Detail title="HWB" value={hwb} />
             <Detail title="CMYK" value={cmyk} />
-            <Detail title="Lch" value={lch} />
+            <Detail title="LCH" value={lch} />
             <Detail
-              title="Lab"
+              title="LAB"
               value={`lab(${lab.l.toFixed(0)}, ${lab.a.toFixed(
                 0
               )}, ${lab.b.toFixed(0)}, ${lab.alpha})`}
