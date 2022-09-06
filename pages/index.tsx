@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { RgbColorPicker, RgbColor } from "react-colorful";
 import { Footer } from "../components/Footer";
-import { SEO } from "../components/SEO";
 import { colord, extend, random } from "colord";
 import hwbPlugin from "colord/plugins/hwb";
 import cmykPlugin from "colord/plugins/cmyk";
@@ -10,6 +9,7 @@ import lchPlugin from "colord/plugins/lch";
 import labPlugin from "colord/plugins/lab";
 import namesPlugin from "colord/plugins/names";
 import { Detail } from "../components/Details";
+import { Seo } from "../components/Seo";
 
 const Home = ({ randomColor }: { randomColor: RgbColor }) => {
   extend([
@@ -35,9 +35,6 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
   const lch = colord(hex).toLchString();
   const lab = colord(hex).toLab();
 
-  const pageTitle = `Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions`;
-  const description = `Color Picker: Get useful color conversions about color ${hex}.`;
-
   const handleChange = (color: RgbColor) => {
     setColor(color);
   };
@@ -55,7 +52,7 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
         backgroundColor: hex,
       }}
     >
-      <SEO pageTitle={pageTitle} description={description} hex={hex} />
+      <Seo />
 
       <main className="flex flex-col space-y-5 items-center justify-center">
         <RgbColorPicker
