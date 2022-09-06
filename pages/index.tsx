@@ -24,8 +24,12 @@ const Home: NextPage = () => {
     namesPlugin,
     harmonies,
   ]);
+  const [red, setRed] = useState<number>(0);
+  const [green, setGreen] = useState<number>(0);
+  const [blue, setBlue] = useState<number>(0);
 
-  const [color, setColor] = useState<RgbColor>({ r: 0, g: 0, b: 0 });
+  const [color, setColor] = useState<RgbColor>(random().toRgb());
+  const randomColor = random().toRgb();
   const hex = colord(color).toHex();
   const textColor = colord(hex).brightness() >= 0.5 ? "#000" : "#fff";
   const hsl = colord(hex).toHslString();
@@ -33,25 +37,25 @@ const Home: NextPage = () => {
   const cmyk = colord(hex).toCmykString();
   const name = colord(hex).toName({ closest: true });
   const brightness = colord(hex).brightness() * 100;
-  const luminance = colord(hex).luminance();
+  const luminance = colord(hex).luminance() * 100;
   const contrast = colord(hex).contrast();
   const hue = colord(hex).hue();
   const lch = colord(hex).toLchString();
   const lab = colord(hex).toLab();
 
-  const getHarmonyList = (key: HarmonyType) => {
-    return colord(hex)
-      .harmonies(key)
-      .map((c) => c.toHex());
-  };
+  // const getHarmonyList = (key: HarmonyType) => {
+  //   return colord(hex)
+  //     .harmonies(key)
+  //     .map((c) => c.toHex());
+  // };
 
-  const complementary = getHarmonyList("complementary");
-  const analogous = getHarmonyList("analogous");
-  const dsComplemenary = getHarmonyList("double-split-complementary");
-  const rectangle = getHarmonyList("rectangle");
-  const splitComplementary = getHarmonyList("split-complementary");
-  const tetradic = getHarmonyList("tetradic");
-  const triadic = getHarmonyList("triadic");
+  // const complementary = getHarmonyList("complementary");
+  // const analogous = getHarmonyList("analogous");
+  // const dsComplemenary = getHarmonyList("double-split-complementary");
+  // const rectangle = getHarmonyList("rectangle");
+  // const splitComplementary = getHarmonyList("split-complementary");
+  // const tetradic = getHarmonyList("tetradic");
+  // const triadic = getHarmonyList("triadic");
 
   const pageTitle = `Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions`;
   const description = `Color Picker: Get useful color conversions about color ${hex}.`;
@@ -62,7 +66,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     // Generate randoem color
-    setColor(random().toRgb());
+    setColor(randomColor);
   }, []);
 
   return (
@@ -110,8 +114,8 @@ const Home: NextPage = () => {
                 0
               )}, ${lab.b.toFixed(0)}, ${lab.alpha})`}
             />
-            <Detail title="Brightness" value={brightness} />
-            <Detail title="Luminance" value={luminance} />
+            <Detail title="Brightness" value={`${brightness.toFixed(0)}%`} />
+            <Detail title="Luminance" value={`${luminance.toFixed(0)}%`} />
             <Detail title="Contrast on white" value={`${contrast}:1`} />
             <Detail title="Hue" value={`${hue} deg`} />
             {name && <Detail title="CSS Keyword" value={`~${name}`} />}

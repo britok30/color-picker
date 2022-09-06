@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .react-colorful {
-  @apply shadow-lg !w-[280px];
+  @apply shadow-lg !w-[320px];
 }
