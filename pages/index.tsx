@@ -23,7 +23,7 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
 
   const [color, setColor] = useState<RgbColor>(randomColor);
   const hex = colord(color).toHex();
-  const textColor = colord(hex).brightness() >= 0.5 ? "#000" : "#fff";
+  const textColor = !colord(hex).isReadable() ? "#000" : "#fff";
   const hsl = colord(hex).toHslString();
   const hwb = colord(hex).toHwbString();
   const cmyk = colord(hex).toCmykString();
@@ -58,7 +58,11 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
       <SEO pageTitle={pageTitle} description={description} hex={hex} />
 
       <main className="flex flex-col space-y-5 items-center justify-center">
-        <RgbColorPicker color={color} onChange={handleChange} />
+        <RgbColorPicker
+          aria-label="rgb-color-picker"
+          color={color}
+          onChange={handleChange}
+        />
         <div>
           <h1 className="text-6xl mb-4">Color Picker 🎨 </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1">
