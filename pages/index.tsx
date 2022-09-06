@@ -43,7 +43,7 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
   };
 
   useEffect(() => {
-    // Generate randoem color
+    // Set random color
     setColor(randomColor);
   }, []);
 
