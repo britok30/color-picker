@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-export const Seo = () => {
+export const SeoHead = () => {
   const pageTitle = `Color Picker | HTML Color Codes | RGB Color Picker | Color Conversions`;
   const pageDesc = `Color Picker: Get useful color conversions about any color.`;
 
@@ -44,7 +44,6 @@ export const Seo = () => {
         name="twitter:image"
         content="https://www.colorhuepicker.com/main.png"
       />
-      <meta name="robots" content="index,follow" />
       <link rel="canonical" key="canonical" href={canonicalUrl} />
     </Head>
   );

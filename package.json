@@ -4,7 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "sitemap": "next-sitemap"
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "colord": "^2.9.3",

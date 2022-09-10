@@ -9,7 +9,7 @@ import lchPlugin from "colord/plugins/lch";
 import labPlugin from "colord/plugins/lab";
 import namesPlugin from "colord/plugins/names";
 import { Detail } from "../components/Details";
-import { Seo } from "../components/Seo";
+import { SeoHead } from "../components/SeoHead";
 
 const Home = ({ randomColor }: { randomColor: RgbColor }) => {
   extend([
@@ -52,7 +52,7 @@ const Home = ({ randomColor }: { randomColor: RgbColor }) => {
         backgroundColor: hex,
       }}
     >
-      <Seo />
+      <SeoHead />
 
       <main className="flex flex-col space-y-5 items-center justify-center">
         <RgbColorPicker
