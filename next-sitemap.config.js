@@ -2,4 +2,5 @@
 module.exports = {
   siteUrl: "https://colorhuepicker.com",
   generateRobotsTxt: true,
+  generateIndexSitemap: false,
 };
